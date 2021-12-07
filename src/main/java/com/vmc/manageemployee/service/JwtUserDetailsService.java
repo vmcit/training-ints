@@ -1,4 +1,4 @@
-package com.vmc.manageemployee.service.impl;
+package com.vmc.manageemployee.service;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class JwtUserDetailsServiceImpl implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private JwtUserDetailsRepository jwtUserDetailsRepository;
