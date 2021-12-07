@@ -1,4 +1,4 @@
-package com.vmc.manageemployee.config;
+package com.vmc.manageemployee.config.jwt;
 
 
 import io.jsonwebtoken.Claims;

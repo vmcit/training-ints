@@ -2,7 +2,7 @@ package com.vmc.manageemployee.controller;
 
 import java.util.Objects;
 
-import com.vmc.manageemployee.config.JwtTokenUtil;
+import com.vmc.manageemployee.config.jwt.JwtTokenUtil;
 import com.vmc.manageemployee.model.JwtRequest;
 import com.vmc.manageemployee.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
