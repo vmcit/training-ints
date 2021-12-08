@@ -1,4 +1,4 @@
-package com.vmc.manageemployee.model;
+package com.vmc.manageemployee.model.jwt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
