@@ -19,8 +19,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private JwtUserDetailsRepository jwtUserDetailsRepository;
 
-    @Autowired
-    private PasswordEncoder bcryptEncoder;
+//    @Autowired
+//    private PasswordEncoder bcryptEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
