@@ -1,10 +1,10 @@
-package com.vmc.manageemployee.dao;
+package com.vmc.manageemployee.repositories;
 
 import com.vmc.manageemployee.models.DepartmentLocation;
 
 import java.util.List;
 
-public interface DepartmentLocationDao {
+public interface DepartmentLocationRepository {
 
     int save(DepartmentLocation deptloc);
     int update(DepartmentLocation deptloc);

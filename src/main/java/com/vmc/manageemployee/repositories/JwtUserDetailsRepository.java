@@ -1,8 +1,9 @@
-package com.vmc.manageemployee.dao;
+package com.vmc.manageemployee.repositories;
+
 
 import com.vmc.manageemployee.models.UserSystem;
 
-public interface JwtUserDetailsDao {
+public interface JwtUserDetailsRepository {
 
     UserSystem findByUsername(String username);
 }

@@ -1,11 +1,10 @@
-package com.vmc.manageemployee.dao;
+package com.vmc.manageemployee.repositories;
 
 import com.vmc.manageemployee.models.Employee;
 
 import java.util.List;
 
-
-public interface EmployeeDao {
+public interface EmployeeRepository {
 
     int save(Employee employee);
     int update(Employee employee);
@@ -13,5 +12,4 @@ public interface EmployeeDao {
     int deleteAll();
     List<Employee> findAll();
     Employee findById(Long id);
-
 }

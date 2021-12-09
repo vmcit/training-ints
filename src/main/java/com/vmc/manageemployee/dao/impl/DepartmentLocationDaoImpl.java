@@ -1,9 +1,7 @@
 package com.vmc.manageemployee.dao.impl;
 
 import com.vmc.manageemployee.dao.DepartmentLocationDao;
-import com.vmc.manageemployee.model.Department;
-import com.vmc.manageemployee.model.DepartmentLocation;
-import com.vmc.manageemployee.model.Employee;
+import com.vmc.manageemployee.models.DepartmentLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

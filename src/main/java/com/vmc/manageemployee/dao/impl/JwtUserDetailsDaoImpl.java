@@ -1,8 +1,7 @@
 package com.vmc.manageemployee.dao.impl;
 
 import com.vmc.manageemployee.dao.JwtUserDetailsDao;
-import com.vmc.manageemployee.model.DepartmentLocation;
-import com.vmc.manageemployee.model.UserSystem;
+import com.vmc.manageemployee.models.UserSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

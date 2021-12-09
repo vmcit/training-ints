@@ -1,11 +1,10 @@
-package com.vmc.manageemployee.dao;
+package com.vmc.manageemployee.services;
 
 import com.vmc.manageemployee.models.Employee;
 
 import java.util.List;
 
-
-public interface EmployeeDao {
+public interface EmployeeService {
 
     int save(Employee employee);
     int update(Employee employee);

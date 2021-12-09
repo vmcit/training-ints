@@ -1,7 +1,7 @@
 package com.vmc.manageemployee.common.jwt;
 import java.util.Date;
 
-import com.vmc.manageemployee.service.jwt.UserDetailsImpl;
+import com.vmc.manageemployee.services.jwt.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,7 +2,7 @@ package com.vmc.manageemployee.dao.impl;
 
 
 import com.vmc.manageemployee.dao.EmployeeDao;
-import com.vmc.manageemployee.model.Employee;
+import com.vmc.manageemployee.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
