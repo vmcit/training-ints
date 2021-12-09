@@ -38,7 +38,12 @@ public class JwtUtils {
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
-
+    /*
+    *  get JWT from the Authorization header (by removing Bearer prefix)
+    * if the request has JWT, validate it, parse username from it
+    * from username, get UserDetails to create an Authentication object
+    * set the current UserDetails in SecurityContext using setAuthentication(authentication) method.
+    */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
