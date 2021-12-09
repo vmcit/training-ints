@@ -18,38 +18,38 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public int save(Department dept) {
-        return jdbcTemplate.update("INSERT INTO departent (DepartmentId, DepartmentName, Duty ,LocationId ) VALUES(?,?,?,?)",
+        return jdbcTemplate.update("INSERT INTO department (DepartmentId, DepartmentName, Duty ,LocationId ) VALUES(?,?,?,?)",
                 new Object[] { dept.getDepartmentId(), dept.getDepartmentName(), dept.getDuty(),
                         dept.getLocationId()});
     }
 
     @Override
     public int update(Department dept) {
-        return jdbcTemplate.update("UPDATE departent SET DepartmentId=?, DepartmentName=?, Duty=?,LocationId=? WHERE DepartmentId=?",
+        return jdbcTemplate.update("UPDATE department SET DepartmentId=?, DepartmentName=?, Duty=?,LocationId=? WHERE DepartmentId=?",
                 new Object[] { dept.getDepartmentId(), dept.getDepartmentName(), dept.getDuty(),
                         dept.getLocationId()});
     }
 
     @Override
     public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM departent WHERE DepartmentId=?", id);
+        return jdbcTemplate.update("DELETE FROM department WHERE DepartmentId=?", id);
     }
 
     @Override
     public int deleteAll() {
-        return jdbcTemplate.update("DELETE from departent");
+        return jdbcTemplate.update("DELETE from departmtent");
     }
 
     @Override
     public List<Department> findAll() {
-        return jdbcTemplate.query("SELECT * from departent",
+        return jdbcTemplate.query("SELECT * from deparmtent",
                 BeanPropertyRowMapper.newInstance(Department.class));
     }
 
     @Override
     public Department findById(Long id) {
         try {
-            Department department = jdbcTemplate.queryForObject("SELECT * FROM departent WHERE DepartmentId=?",
+            Department department = jdbcTemplate.queryForObject("SELECT * FROM department WHERE DepartmentId=?",
                     BeanPropertyRowMapper.newInstance(Department.class), id);
 
             return department;

@@ -24,12 +24,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * Dang ky dang nhap get token.
+ */
 @CrossOrigin (origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
