@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * Xử lý ngoại lệ về xác thực (Authencation)
+ */
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
