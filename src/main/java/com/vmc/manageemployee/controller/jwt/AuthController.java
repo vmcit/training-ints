@@ -1,6 +1,7 @@
 package com.vmc.manageemployee.controller.jwt;
 
 import com.vmc.manageemployee.common.jwt.ERole;
+import com.vmc.manageemployee.common.jwt.JwtTokenUtil;
 import com.vmc.manageemployee.common.jwt.JwtUtils;
 import com.vmc.manageemployee.dto.jwt.JwtResponse;
 import com.vmc.manageemployee.dto.jwt.LoginRequest;
@@ -12,6 +13,8 @@ import com.vmc.manageemployee.repository.RoleRepository;
 import com.vmc.manageemployee.repository.UserRepository;
 import com.vmc.manageemployee.service.jwt.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +50,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Validated @RequestBody LoginRequest loginRequest) {
 
@@ -60,11 +67,16 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+        HttpHeaders Header = new HttpHeaders();
+        Header.add("Authorization","Bearer "+ jwt);
+        // Header.add("X-Refresh-Token",refreshToken.getToken());
+
+//        return ResponseEntity.ok(new JwtResponse(jwt,
+//                userDetails.getId(),
+//                userDetails.getUsername(),
+//                userDetails.getEmail(),
+//                roles));
+        return new ResponseEntity<>(Header, HttpStatus.OK);
     }
 
     @PostMapping("/signup")

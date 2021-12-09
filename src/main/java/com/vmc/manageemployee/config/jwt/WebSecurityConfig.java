@@ -14,6 +14,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +51,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public CorsFilter corsFilter() {
+////        CorsConfiguration corsConfiguration = new CorsConfiguration();
+////        corsConfiguration.setAllowCredentials(true);
+////        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("*"));
+////        //corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost", "http://127.0.0.1", "http://http://10.33.0.12", "*"));
+////        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
+////                "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "X-Refresh-Token", "Referer", "User-Agent",
+////                "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+////        corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "X-Refresh-Token", "Referer", "User-Agent",
+////                "Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "X-Total-Count", "X-Current-Page",
+////                "X-Last-Page", "X-Size", "Link"));
+////        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+////        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+////        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+////        return new CorsFilter(urlBasedCorsConfigurationSource);
+//        return null;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
