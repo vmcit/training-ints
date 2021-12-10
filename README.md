@@ -60,3 +60,7 @@ CREATE TABLE User_Company (
 GO
 
 INSERT INTO User_Company (user_id, full_name, [username], [password], [enabled], account_non_expired, credentials_non_expired, account_non_locked) VALUES (1, 'Admin', 'admin', '$2a$10$HeAsLAsudoGguPoqfzsemONLq4lyKTqHAzEN9Ynvv4Ol2R50UypYy', 1, 1, 1, 1);
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
