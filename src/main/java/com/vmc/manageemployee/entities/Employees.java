@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class Employees {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "fullName")
@@ -29,8 +29,8 @@ public class Employees {
     @Column(name = "birthDate")
     private String birthDate;
 
-    @OneToOne(mappedBy = "employees", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @ManyToOne
+    @JoinColumn(name="departmentId", nullable=false)
     private Department department;
 
     public Employees(int id, String fullName, String gender, String birthDate) {

@@ -18,21 +18,21 @@ public class DepartmentLocationDaoImpl implements DepartmentLocationDao {
 
     @Override
     public int save(DepartmentLocation deptloc) {
-        return jdbcTemplate.update("INSERT INTO department_location (LocationId, Adress ,City ,Country) VALUES(?,?,?,?)",
-                new Object[] { deptloc.getLocationId(), deptloc.getAdress(), deptloc.getCity(),
+        return jdbcTemplate.update("INSERT INTO department_location (location_id, adress ,city ,country) VALUES(?,?,?,?)",
+                new Object[] { deptloc.getLocation_id(), deptloc.getAdress(), deptloc.getCity(),
                         deptloc.getCountry()});
     }
 
     @Override
     public int update(DepartmentLocation deptloc) {
-        return jdbcTemplate.update("UPDATE department_location SET LocationId=?, Adress=?, City=?,Country=? WHERE LocationId=?",
-                new Object[] { deptloc.getLocationId(), deptloc.getAdress(), deptloc.getCity(),
+        return jdbcTemplate.update("UPDATE department_location SET location_id=?, adress=?, city=?,country=? WHERE location_id=?",
+                new Object[] { deptloc.getLocation_id(), deptloc.getAdress(), deptloc.getCity(),
                         deptloc.getCountry()});
     }
 
     @Override
     public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM department_location WHERE LocationId=?", id);
+        return jdbcTemplate.update("DELETE FROM department_location WHERE location_id=?", id);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DepartmentLocationDaoImpl implements DepartmentLocationDao {
     @Override
     public DepartmentLocation findById(Long id) {
         try {
-            DepartmentLocation departmentLocation = jdbcTemplate.queryForObject("SELECT * FROM department_location WHERE LocationId=?",
+            DepartmentLocation departmentLocation = jdbcTemplate.queryForObject("SELECT * FROM department_location WHERE location_id=?",
                     BeanPropertyRowMapper.newInstance(DepartmentLocation.class), id);
 
             return departmentLocation;

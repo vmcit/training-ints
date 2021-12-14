@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/app")
+@RequestMapping("/api/app/jdbc")
 public class EmployeeController {
 
     @Autowired
@@ -58,8 +58,8 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
         try {
-            employeeService.save(new Employee( employee.getId(), employee.getFullName(), employee.getGender(),
-                    employee.getBirthDate(),employee.getDepartmentId()));
+            employeeService.save(new Employee( employee.getId(), employee.getFull_name(), employee.getGender(),
+                    employee.getBirth_date(),employee.getDepartment_id()));
             return new ResponseEntity<>("Employee was created successfully.", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,10 +72,10 @@ public class EmployeeController {
 
         if (employee1 != null) {
             employee1.setId((int) id);
-            employee1.setFullName(employee.getFullName());
+            employee1.setFull_name(employee.getFull_name());
             employee1.setGender(employee.getGender());
-            employee1.setBirthDate(employee.getBirthDate());
-            employee1.setDepartmentId(employee.getDepartmentId());
+            employee1.setBirth_date(employee.getBirth_date());
+            employee1.setDepartment_id(employee.getDepartment_id());
 
             employeeService.update(employee1);
             return new ResponseEntity<>("Employee was updated successfully.", HttpStatus.OK);

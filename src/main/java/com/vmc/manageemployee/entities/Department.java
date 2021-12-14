@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Department")
@@ -14,8 +15,8 @@ import javax.persistence.*;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "departmentId")
+    @Column(name = "department_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int departmentId;
 
     @Column(name = "departmentName")
@@ -24,10 +25,8 @@ public class Department {
     @Column(name = "duty")
     private String duty;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "DepartmentId")
-    private Employees employees;
+    @OneToMany(mappedBy="department")
+    private Set<Employees> employees;
 
     @ManyToOne
     @JoinColumn(name="locationId", nullable=false)

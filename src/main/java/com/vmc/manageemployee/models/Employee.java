@@ -11,27 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Employee {
     private int Id;
-    private String fullName;
+    private String full_name;
     private String gender;
-    private String birthDate;
-    private int DepartmentId;
+    private String birth_date;
+    private int department_id;
 
-    public Employee(int id, String fullName, String gender, String birthDate, int departmentId) {
+    public Employee(int id, String full_name, String gender, String birth_date, int department_id) {
         Id = id;
-        this.fullName = fullName;
+        this.full_name = full_name;
         this.gender = gender;
-        this.birthDate = birthDate;
-        DepartmentId = departmentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "Id=" + Id +
-                ", fullName='" + fullName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", DepartmentId=" + DepartmentId +
-                '}';
+        this.birth_date = birth_date;
+        this.department_id = department_id;
     }
 }

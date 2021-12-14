@@ -15,8 +15,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class DepartmentLocation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "locationId")
+    @Column(name = "location_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int locationId;
 
     @Column(name = "adress")

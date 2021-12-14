@@ -18,21 +18,21 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public int save(Department dept) {
-        return jdbcTemplate.update("INSERT INTO DEPARTMENT (DepartmentId, DepartmentName, Duty ,LocationId ) VALUES(?,?,?,?)",
-                new Object[] { dept.getDepartmentId(), dept.getDepartmentName(), dept.getDuty(),
-                        dept.getLocationId()});
+        return jdbcTemplate.update("INSERT INTO DEPARTMENT (department_id, department_name, Duty ,location_id ) VALUES(?,?,?,?)",
+                new Object[] { dept.getDepartment_id(), dept.getDepartment_name(), dept.getDuty(),
+                        dept.getLocation_id()});
     }
 
     @Override
     public int update(Department dept) {
-        return jdbcTemplate.update("UPDATE DEPARTMENT SET DepartmentId=?, DepartmentName=?, Duty=?,LocationId=? WHERE DepartmentId=?",
-                new Object[] { dept.getDepartmentId(), dept.getDepartmentName(), dept.getDuty(),
-                        dept.getLocationId()});
+        return jdbcTemplate.update("UPDATE DEPARTMENT SET department_id=?, department_name=?, Duty=?,location_id=? WHERE department_id=?",
+                new Object[] { dept.getDepartment_id(), dept.getDepartment_name(), dept.getDuty(),
+                        dept.getLocation_id()});
     }
 
     @Override
     public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM DEPARTMENT WHERE DepartmentId=?", id);
+        return jdbcTemplate.update("DELETE FROM DEPARTMENT WHERE department_id=?", id);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public Department findById(Long id) {
         try {
-            Department department = jdbcTemplate.queryForObject("SELECT * FROM DEPARTMENT WHERE DepartmentId=?",
+            Department department = jdbcTemplate.queryForObject("SELECT * FROM DEPARTMENT WHERE department_id=?",
                     BeanPropertyRowMapper.newInstance(Department.class), id);
 
             return department;

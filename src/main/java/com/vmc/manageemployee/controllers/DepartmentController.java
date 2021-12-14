@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/app")
+@RequestMapping("/api/app/jdbc")
 public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
@@ -48,8 +48,8 @@ public class DepartmentController {
     @PostMapping("/departments")
     public ResponseEntity<String> createDepartment(@RequestBody Department dept) {
         try {
-            departmentService.save(new Department( dept.getDepartmentId(), dept.getDepartmentName(), dept.getDuty(),
-                    dept.getLocationId()));
+            departmentService.save(new Department( dept.getDepartment_id(), dept.getDepartment_name(), dept.getDuty(),
+                    dept.getLocation_id()));
             return new ResponseEntity<>("Department was created successfully.", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,10 +61,10 @@ public class DepartmentController {
         Department department = departmentService.findById(id);
 
         if (department != null) {
-            department.setDepartmentId( (int) id);
-            department.setDepartmentName(dept.getDepartmentName());
+            department.setDepartment_id( (int) id);
+            department.setDepartment_name(dept.getDepartment_name());
             department.setDuty(dept.getDuty());
-            department.setLocationId(dept.getLocationId());
+            department.setLocation_id(dept.getLocation_id());
 
 
             departmentService.update(department);

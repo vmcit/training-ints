@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/app")
+@RequestMapping("/api/app/jdbc")
 public class DepartmentLocationController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class DepartmentLocationController {
     @PostMapping("/departmentlocations")
     public ResponseEntity<String> createDepartmentLocation(@RequestBody DepartmentLocation deptloc) {
         try {
-            departmentLocationService.save(new DepartmentLocation( deptloc.getLocationId(), deptloc.getAdress(), deptloc.getCity(),
+            departmentLocationService.save(new DepartmentLocation( deptloc.getLocation_id(), deptloc.getAdress(), deptloc.getCity(),
                     deptloc.getCountry()));
             return new ResponseEntity<>("DepartmentLocation was created successfully.", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class DepartmentLocationController {
         DepartmentLocation departmentlocation = departmentLocationService.findById(id);
 
         if (departmentlocation != null) {
-            departmentlocation.setLocationId( (int) id);
+            departmentlocation.setLocation_id( (int) id);
             departmentlocation.setAdress(deptloc.getAdress());
             departmentlocation.setCity(deptloc.getCity());
             departmentlocation.setCountry(deptloc.getCountry());

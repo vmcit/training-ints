@@ -12,25 +12,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Department {
 
-    private int departmentId;
-    private String departmentName ;
+    private int department_id;
+    private String department_name ;
     private String duty;
-    private int locationId ;
+    private int location_id ;
 
-    public Department(int departmentId, String departmentName, String duty, int locationId) {
-        this.departmentId = departmentId;
-        this.departmentName = departmentName;
+    public Department(int department_id, String department_name, String duty, int location_id) {
+        this.department_id = department_id;
+        this.department_name = department_name;
         this.duty = duty;
-        this.locationId = locationId;
-    }
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "departmentId='" + departmentId + '\'' +
-                ", departmentName='" + departmentName + '\'' +
-                ", duty='" + duty + '\'' +
-                ", locationId='" + locationId + '\'' +
-                '}';
+        this.location_id = location_id;
     }
 }
