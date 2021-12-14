@@ -28,7 +28,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(required = false) String id) {
+    public ResponseEntity<List<Employee>> getAllEmployees() {
         try {
             List<Employee> employees = new ArrayList<Employee>();
 

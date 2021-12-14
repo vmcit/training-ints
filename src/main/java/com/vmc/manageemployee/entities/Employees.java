@@ -33,12 +33,12 @@ public class Employees {
     @JoinColumn(name="departmentId", nullable=false)
     private Department department;
 
-    public Employees(int id, String fullName, String gender, String birthDate) {
+    public Employees(int id, String fullName, String gender, String birthDate, Department department) {
         this.id = id;
         this.fullName = fullName;
         this.gender = gender;
         this.birthDate = birthDate;
+        this.department = department;
     }
-
 }
 

@@ -21,7 +21,7 @@ public class DepartmentLocationController {
     DepartmentLocationService departmentLocationService;
 
     @GetMapping("/departmentlocations")
-    public ResponseEntity<List<DepartmentLocation>> getAllDepartmentLocation(@RequestParam(required = false) String id) {
+    public ResponseEntity<List<DepartmentLocation>> getAllDepartmentLocation() {
         try {
             List<DepartmentLocation> departmentLocations = new ArrayList<DepartmentLocation>();
 

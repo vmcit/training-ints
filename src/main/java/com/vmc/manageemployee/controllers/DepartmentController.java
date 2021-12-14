@@ -18,7 +18,7 @@ public class DepartmentController {
     DepartmentService departmentService;
 
     @GetMapping("/departments")
-    public ResponseEntity<List<Department>> getAllDepartment(@RequestParam(required = false) String id) {
+    public ResponseEntity<List<Department>> getAllDepartment() {
         try {
             List<Department> departments = new ArrayList<Department>();
 

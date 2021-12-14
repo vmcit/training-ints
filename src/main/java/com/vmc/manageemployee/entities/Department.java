@@ -32,10 +32,10 @@ public class Department {
     @JoinColumn(name="locationId", nullable=false)
     private DepartmentLocation departmentLocation;
 
-
-    public Department(int departmentId, String departmentName, String duty) {
+    public Department(int departmentId, String departmentName, String duty, DepartmentLocation departmentLocation) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.duty = duty;
+        this.departmentLocation = departmentLocation;
     }
 }
