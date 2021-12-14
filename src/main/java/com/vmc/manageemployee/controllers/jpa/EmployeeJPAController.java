@@ -1,7 +1,6 @@
 package com.vmc.manageemployee.controllers.jpa;
 
 
-import com.vmc.manageemployee.entities.Department;
 import com.vmc.manageemployee.entities.DepartmentLocation;
 import com.vmc.manageemployee.entities.Employees;
 import com.vmc.manageemployee.exception.ResourceNotFoundException;
@@ -17,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller use JPA
+ * */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/app/jpa")
