@@ -1,0 +1,28 @@
+-- create table EMPLOYEES
+-- (
+--     Id int NOT NULL,
+--     FullName varchar(50) NOT NULL,
+--     Gender varchar(6) NOT NULL,
+--     BirthDate DATE NOT NULL,
+--     DepartmentId int NOT NULL,
+--     PRIMARY KEY(Id)
+-- )
+--
+-- create table DEPARTMENT
+-- (
+--     DepartmentId int NOT NULL,
+--     DepartmentName varchar(30) NOT NULL,
+--     Duty varchar(70),
+--     LocationId int NOT NULL,
+--     PRIMARY KEY(DepartmentId)
+-- )
+--
+-- create table DEPARTMENT_LOCATION
+-- (
+--     LocationId int NOT NULL,
+--     Adress varchar(60) NOT NULL,
+--     City varchar(30),
+--     Country varchar(30),
+--     PRIMARY KEY(LocationId)
+-- )
+

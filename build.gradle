@@ -23,6 +23,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.5.11'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.11'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
+    implementation 'org.springdoc:springdoc-openapi:1.5.11'
+    implementation 'org.springdoc:springdoc-openapi-data-rest:1.5.11'
+    implementation 'io.swagger.core.v3:swagger-annotations:2.1.11'
+
+    implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.4.3'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.5.4'
+
+
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.5.1'
     compileOnly 'org.projectlombok:lombok'
