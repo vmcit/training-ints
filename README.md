@@ -3,9 +3,8 @@
 
 study about spring boot
 step 1 : Create data base on Sql Sever  comand:
-
-create database company
-use company
+-create database company
+-use company
 step 2 : open app on intelij idea  setting and use jdk 17
  -- >run app spring boot
 
