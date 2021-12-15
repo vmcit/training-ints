@@ -27,7 +27,7 @@ public class DepartmentLocationDaoImpl implements DepartmentLocationDao {
     public int update(DepartmentLocation deptloc) {
         return jdbcTemplate.update("UPDATE department_location SET location_id=?, adress=?, city=?,country=? WHERE location_id=?",
                 new Object[] { deptloc.getLocation_id(), deptloc.getAdress(), deptloc.getCity(),
-                        deptloc.getCountry()});
+                        deptloc.getCountry(),deptloc.getLocation_id()});
     }
 
     @Override

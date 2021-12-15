@@ -27,7 +27,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public int update(Department dept) {
         return jdbcTemplate.update("UPDATE DEPARTMENT SET department_id=?, department_name=?, Duty=?,location_id=? WHERE department_id=?",
                 new Object[] { dept.getDepartment_id(), dept.getDepartment_name(), dept.getDuty(),
-                        dept.getLocation_id()});
+                        dept.getLocation_id()},dept.getDepartment_id());
     }
 
     @Override
