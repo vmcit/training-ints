@@ -1,15 +1,16 @@
-package com.vmc.manageemployee.dto.jwt;
+package com.vmc.manageemployee.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 /**
  * Class tạo ra de test thu vs JDBC
  */
 @Setter
 @Getter
 @NoArgsConstructor
-public class EmployeDTO {
+public class EmployeeDTO {
     private int Id;
     private String full_name;
     private String gender;
