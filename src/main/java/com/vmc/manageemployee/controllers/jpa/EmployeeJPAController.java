@@ -54,7 +54,8 @@ public class EmployeeJPAController {
         Optional<Employees> employees = employeeRepository.findById((int) id);
         if (employees.isPresent()) {
             EmployeeDTO EmployeeDTO = new EmployeeDTO(employees.get().getId(),
-                    employees.get().getFullName(), employees.get().getGender(), employees.get().getBirthDate(), employees.get().getDepartment().getDepartmentId());
+                    employees.get().getFullName(), employees.get().getGender(), employees.get().getBirthDate(),
+                    employees.get().getDepartment().getDepartmentId());
             return new ResponseEntity<>(EmployeeDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
