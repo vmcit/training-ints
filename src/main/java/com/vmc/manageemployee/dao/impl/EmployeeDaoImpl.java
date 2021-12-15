@@ -57,5 +57,33 @@ public class EmployeeDaoImpl implements EmployeeDao {
             return null;
         }
     }
+
+    @Override
+    public Employee findByDept(String dept) {
+        try {
+            Employee employee = jdbcTemplate.queryForObject("SELECT * FROM " +
+                            "employees left join department on employees.department_id = department.department_id  " +
+                            "WHERE department_name=?",
+                    BeanPropertyRowMapper.newInstance(Employee.class), dept);
+
+            return employee;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Employee findByLocation(String loc) {
+        try {
+            Employee employee = jdbcTemplate.queryForObject("select * from employees left join department on employees.department_id = department.department_id left join department_location on\n" +
+                            "department.location_id = department_location.location_id\n" +
+                            "where adress=?",
+                    BeanPropertyRowMapper.newInstance(Employee.class), loc);
+
+            return employee;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
 }
 

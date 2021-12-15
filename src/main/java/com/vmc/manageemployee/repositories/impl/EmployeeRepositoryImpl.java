@@ -43,4 +43,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public Employee findById(Long id) {
         return employeeDao.findById(id);
     }
+
+    @Override
+    public Employee findByDept(String dept) {
+        return employeeDao.findByDept(dept);
+    }
+
+    @Override
+    public Employee findByLocation(String loc) {
+        return employeeDao.findByLocation(loc);
+    }
+
 }

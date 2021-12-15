@@ -12,4 +12,6 @@ public interface EmployeeRepository {
     int deleteAll();
     List<Employee> findAll();
     Employee findById(Long id);
+    Employee findByDept(String dept);
+    Employee findByLocation(String loc);
 }

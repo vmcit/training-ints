@@ -58,6 +58,28 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/employees/{dept}")
+    public ResponseEntity<Employee> getEmployeelByDept(@PathVariable("dept") String dept) {
+        Employee employee = employeeService.findByDept(dept);
+
+        if (employee != null) {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/employees/{loc}")
+    public ResponseEntity<Employee> getEmployeelByLoc(@PathVariable("loc") String loc) {
+        Employee employee = employeeService.findByLocation(loc);
+
+        if (employee != null) {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/employees")
     public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
         try {
