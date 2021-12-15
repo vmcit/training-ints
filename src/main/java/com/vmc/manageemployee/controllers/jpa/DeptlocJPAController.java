@@ -1,6 +1,7 @@
 package com.vmc.manageemployee.controllers.jpa;
 
 
+import com.vmc.manageemployee.dto.DepartmentLocationDTO;
 import com.vmc.manageemployee.entities.DepartmentLocation;
 import com.vmc.manageemployee.exception.ResourceNotFoundException;
 import com.vmc.manageemployee.repositories.jpa.DepartmentLocationRepository;
@@ -30,9 +31,7 @@ public class DeptlocJPAController {
         try {
             List<DepartmentLocation> departmentLocationList = new ArrayList<>();
 
-
-                departmentLocationRepository.findAll().forEach(departmentLocationList::add);
-
+            departmentLocationList =  departmentLocationRepository.findAll();
             if (departmentLocationList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -44,38 +43,42 @@ public class DeptlocJPAController {
     }
 
     @GetMapping("/departmentlocations/{id}")
-    public ResponseEntity<DepartmentLocation> getDepartmentLocationById(@PathVariable("id") long id) {
+    public ResponseEntity<DepartmentLocationDTO> getDepartmentLocationById(@PathVariable("id") long id) {
         Optional<DepartmentLocation> departmentLocation = departmentLocationRepository.findById((int) id);
 
         if (departmentLocation.isPresent()) {
-            return new ResponseEntity<>(departmentLocation.get(), HttpStatus.OK);
+            DepartmentLocationDTO departmentLocationDTO = new DepartmentLocationDTO(departmentLocation.get().getLocationId(),
+                    departmentLocation.get().getAdress(),departmentLocation.get().getCity(),departmentLocation.get().getCountry());
+            return new ResponseEntity<>(departmentLocationDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/departmentlocations")
-    public ResponseEntity<DepartmentLocation> createDepartmentLocation(@Validated @RequestBody DepartmentLocation departmentLocation) {
+    public ResponseEntity<String> createDepartmentLocation(@Validated @RequestBody DepartmentLocationDTO departmentLocationDTO) {
         try {
-            DepartmentLocation departmentLocation1 = departmentLocationRepository
-                    .save(new DepartmentLocation(departmentLocation.getLocationId(), departmentLocation.getAdress(),departmentLocation.getCity(),
-                            departmentLocation.getCountry()));
-            return new ResponseEntity<>(departmentLocation1, HttpStatus.CREATED);
+           departmentLocationRepository
+                    .save(new DepartmentLocation(departmentLocationDTO.getLocation_id(), departmentLocationDTO.getAdress(),departmentLocationDTO.getCity(),
+                            departmentLocationDTO.getCountry()));
+            return new ResponseEntity<>("Department Locations was created successfully.", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/departmentlocations/{id}")
-    public ResponseEntity<DepartmentLocation> updateDepartmentLocation(@PathVariable("id") long id,@Validated @RequestBody DepartmentLocation departmentLocation) {
+    public ResponseEntity<String> updateDepartmentLocation(@PathVariable("id") long id,@Validated @RequestBody DepartmentLocationDTO departmentLocationDTO) {
         Optional<DepartmentLocation> departmentLocation1 = departmentLocationRepository.findById((int) id);
 
         if (departmentLocation1.isPresent()) {
             DepartmentLocation departmentLocation2 = departmentLocation1.get();
-            departmentLocation2.setLocationId(departmentLocation.getLocationId());
-            departmentLocation2.setAdress(departmentLocation.getAdress());
-            departmentLocation2.setCity(departmentLocation.getCity());
-            return new ResponseEntity<>(departmentLocationRepository.save(departmentLocation2), HttpStatus.OK);
+            departmentLocation2.setLocationId(departmentLocationDTO.getLocation_id());
+            departmentLocation2.setAdress(departmentLocationDTO.getAdress());
+            departmentLocation2.setCity(departmentLocationDTO.getCity());
+            departmentLocation2.setCountry(departmentLocationDTO.getCountry());
+            departmentLocationRepository.save(departmentLocation2);
+            return new ResponseEntity<>("Department Locations was update successfully.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -92,7 +95,6 @@ public class DeptlocJPAController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 

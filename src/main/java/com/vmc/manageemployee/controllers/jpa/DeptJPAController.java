@@ -1,7 +1,9 @@
 package com.vmc.manageemployee.controllers.jpa;
 
+import com.vmc.manageemployee.dto.DepartmentDTO;
 import com.vmc.manageemployee.entities.Department;
 import com.vmc.manageemployee.entities.DepartmentLocation;
+import com.vmc.manageemployee.entities.Employees;
 import com.vmc.manageemployee.exception.ResourceNotFoundException;
 import com.vmc.manageemployee.repositories.jpa.DepartmentLocationRepository;
 import com.vmc.manageemployee.repositories.jpa.DepartmentRepository;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Controller use JPA
- * */
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/app/jpa")
@@ -31,14 +34,10 @@ public class DeptJPAController {
     public ResponseEntity<List<Department>> getAllDepartment() {
         try {
             List<Department> departments = new ArrayList<>();
-
-
-            departmentRepository.findAll().forEach(departments::add);
-
+            departments = departmentRepository.findAll();
             if (departments.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(departments, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,77 +46,82 @@ public class DeptJPAController {
 
 
     @GetMapping("/departments/{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") long id) {
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable("id") long id) {
         Optional<Department> department = departmentRepository.findById((int) id);
 
         if (department.isPresent()) {
-            return new ResponseEntity<>(department.get(), HttpStatus.OK);
+            DepartmentDTO departmentDTO = new DepartmentDTO(department.get().getDepartmentId(), department.get().getDepartmentName(),
+                    department.get().getDuty(), department.get().getDepartmentLocation().getLocationId());
+            return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/departmentlocations/{location_id}/departments")
-    public ResponseEntity<DepartmentLocation> createDepartment(@PathVariable(value = "location_id") long id, @Validated @RequestBody Department department) {
+    public ResponseEntity<String> createDepartment(@PathVariable(value = "location_id") long id, @Validated @RequestBody DepartmentDTO departmentDTO) {
 
         try {
             departmentLocationRepository.findById(Math.toIntExact(id)).map(departmentlocation -> {
+                Department department = new Department();
                 department.setDepartmentLocation(departmentlocation);
+                department.setDepartmentId(departmentDTO.getDepartment_id());
+                department.setDepartmentName(departmentDTO.getDepartment_name());
+                department.setDuty(departmentDTO.getDuty());
                 departmentRepository.save(department);
                 return ResponseEntity.ok().build();
             }).orElseThrow(() -> new ResourceNotFoundException("location_id " + id + " not found"));
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+            return new ResponseEntity<>("Department was created successfully.", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
     @PutMapping("/departmentlocations/{location_id}/departments/{department_id}")
-    public ResponseEntity<DepartmentLocation> updateDepartment(@PathVariable("location_id") long locationid,
-                                                               @PathVariable("department_id") long departmentid,
-                                                               @RequestBody Department department) {
+    public ResponseEntity<String> updateDepartment(@PathVariable("location_id") long locationid,
+                                                   @PathVariable("department_id") long departmentid,
+                                                   @RequestBody DepartmentDTO departmentDTO) {
         try {
-            if (!departmentLocationRepository.existsById(Math.toIntExact(locationid))) {
-                throw new ResourceNotFoundException("location_id " + locationid + " not found");
-            }
-
-            departmentRepository.findById(Math.toIntExact(departmentid)).map(department1 -> {
-                department1.setDepartmentId(department.getDepartmentId());
-                department1.setDepartmentName(department.getDepartmentName());
-                department1.setDuty(department.getDuty());
-                departmentRepository.save(department1);
+            departmentLocationRepository.findById((int) locationid).map(departmentLocation -> {
+                Department department = new Department();
+                department.setDepartmentLocation(departmentLocation);
+                departmentRepository.findById((int) departmentid).map(department1 -> {
+                    department.setDepartmentId(departmentDTO.getDepartment_id());
+                    department.setDepartmentName(departmentDTO.getDepartment_name());
+                    department.setDuty(departmentDTO.getDuty());
+                    departmentRepository.save(department);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("location_id " + locationid + "not found"));
                 return ResponseEntity.ok().build();
-            }).orElseThrow(() -> new ResourceNotFoundException("departmentid " + departmentid + "not found"));
+            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + departmentid + " not found"));
 
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Department was updated successfully.", HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
     }
-    @DeleteMapping ("/departmentlocations/{location_id}/departments/{department_id}")
+
+    @DeleteMapping("/departmentlocations/{location_id}/departments/{department_id}")
     public ResponseEntity<Object> deleteDepartment(@PathVariable("location_id") long locationid, @PathVariable("department_id") long departmentid) {
         try {
-            if (!departmentLocationRepository.existsById(Math.toIntExact(locationid))) {
-                throw new ResourceNotFoundException("location_id " + locationid + " not found");
-            }
-
-            departmentRepository.findById(Math.toIntExact(departmentid)).map(department1 -> {
-                departmentRepository.delete(department1);
+            departmentLocationRepository.findById((int) locationid).map(departmentLocation -> {
+                Department department = new Department();
+                department.setDepartmentLocation(departmentLocation);
+                departmentRepository.findById((int) departmentid).map(department1 -> {
+                    department.setDepartmentId(department1.getDepartmentId());
+                    department.setDepartmentName(department1.getDepartmentName());
+                    department.setDuty(department1.getDuty());
+                    departmentRepository.delete(department);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("location_id " + locationid + "not found"));
                 return ResponseEntity.ok().build();
-            }).orElseThrow(() -> new ResourceNotFoundException("departmentid " + departmentid + "not found"));
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + departmentid + " not found"));
+            return new ResponseEntity<>("Department was deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
 
