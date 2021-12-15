@@ -36,7 +36,7 @@ public class EmployeeJPAController {
             List<Employees> employees = new ArrayList<>();
 
 
-            employeeRepository.findAll().forEach(employees::add);
+            employees =  employeeRepository.findAll();
 
             if (employees.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,9 +52,10 @@ public class EmployeeJPAController {
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employees> getEmployeelById(@PathVariable("id") long id) {
         Optional<Employees> employees = employeeRepository.findById((int) id);
-
         if (employees.isPresent()) {
-            return new ResponseEntity<>(employees.get(), HttpStatus.OK);
+            Employees employees1 = new Employees(employees.get().getId(),
+                    employees.get().getFullName(),employees.get().getGender(),employees.get().getBirthDate(),employees.get().getDepartment() );
+            return new ResponseEntity<>(employees1, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
