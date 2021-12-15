@@ -1,4 +1,4 @@
-package com.vmc.manageemployee.dto.jwt;
+package com.vmc.manageemployee.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
