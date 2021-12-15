@@ -48,7 +48,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeelById(@PathVariable("id") long id) {
+    public ResponseEntity<Employee> getEmployeelById(@PathVariable("id") Long id) {
         Employee employee = employeeService.findById(id);
 
         if (employee != null) {
@@ -58,7 +58,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/employees/{dept}")
+    @GetMapping("/employees/finddept/{dept}")
     public ResponseEntity<Employee> getEmployeelByDept(@PathVariable("dept") String dept) {
         Employee employee = employeeService.findByDept(dept);
 
@@ -69,7 +69,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/employees/{loc}")
+    @GetMapping("/employees/findloc/{loc}")
     public ResponseEntity<Employee> getEmployeelByLoc(@PathVariable("loc") String loc) {
         Employee employee = employeeService.findByLocation(loc);
 
@@ -102,7 +102,8 @@ public class EmployeeController {
             employee1.setBirth_date(employee.getBirth_date());
             employee1.setDepartment_id(employee.getDepartment_id());
 
-            employeeService.update(employee1);
+            employeeService.update(new Employee(employee1.getId(),
+                    employee1.getFull_name(),employee1.getGender(),employee1.getBirth_date(),employee1.getDepartment_id()));
             return new ResponseEntity<>("Employee was updated successfully.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cannot find Employee with id=" + id, HttpStatus.NOT_FOUND);

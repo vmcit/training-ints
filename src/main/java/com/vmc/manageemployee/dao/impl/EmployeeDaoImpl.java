@@ -19,16 +19,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public int save(Employee employee) {
-        return jdbcTemplate.update("INSERT INTO employess (id, full_name , gender ,birth_date ,department_id,) VALUES(?,?,?,?,?)",
+        return jdbcTemplate.update("INSERT INTO employees (id, full_name , gender ,birth_date ,department_id) VALUES(?,?,?,?,?)",
                 new Object[] { employee.getId(), employee.getFull_name(), employee.getGender(),
                         employee.getBirth_date(),employee.getDepartment_id()});
     }
 
     @Override
     public int update(Employee employee) {
-        return jdbcTemplate.update("UPDATE employee SET id=?, full_name=?, gender=?,birth_date=?,department_id=? WHERE id=?",
+        return jdbcTemplate.update("UPDATE employees SET id=?, full_name=?, gender=?,birth_date=?,department_id=? WHERE id=?",
                 new Object[] { employee.getId(), employee.getFull_name(), employee.getGender(),
-                        employee.getBirth_date(),employee.getDepartment_id()});
+                        employee.getBirth_date(),employee.getDepartment_id(),employee.getId()});
     }
 
     @Override
