@@ -1,7 +1,8 @@
 package com.vmc.manageemployee.controllers;
 
-import com.vmc.manageemployee.controllers.jpa.DeptJPAController;
-import com.vmc.manageemployee.dto.DepartmentDTO;
+
+import com.vmc.manageemployee.controllers.jpa.EmployeeJPAController;
+import com.vmc.manageemployee.dto.EmployeeDTO;
 import com.vmc.manageemployee.util.JsonUtils;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -21,15 +22,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.Assert.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DeptJPAControllerTest {
+public class EmployeeJPAControllerTest {
 
     @Autowired
-    private DeptJPAController deptJPAController;
+    private EmployeeJPAController deptJPAController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +41,7 @@ public class DeptJPAControllerTest {
     public String username = "admin";
     public String password = "Abc12345";
 
-    DepartmentDTO department = new DepartmentDTO();
+    EmployeeDTO Employess = new EmployeeDTO();
 
     private String obtainAccessToken(String username, String password) throws Exception {
         String contentAsString = String.format("{ \"username\":\"%s\", \"password\":\"%s\" }", username, password);
@@ -62,58 +62,8 @@ public class DeptJPAControllerTest {
         // assertThat(deptJPAController.getClass()).isNotNull();
     }
 
-
-    // PostID without Token
     @Test
-    @Order(2)
-    public void givenNoToken_whenPostSecureRequest_thenUnauthorized() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(department)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
-    }
-
-    //Post ID with Token
-    @Test
-    @Order(3)
-    public void givenToken_whenPostSecureRequest_thenOk() throws Exception {
-
-        String accessToken = obtainAccessToken(username, password);
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                        .header(accessTokenHeaderKey, accessToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(department)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    // Get All without Token
-    @Test
-    @Order(4)
-    public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(uri))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
-
-    }
-
-    //Get All with Token
-    @Test
-    @Order(5)
-    public void givenToken_whenGetSecureRequest_thenOk() throws Exception {
-        String accessToken = obtainAccessToken(username, password);
-        mockMvc.perform(MockMvcRequestBuilders.get(uri)
-                        .header(accessTokenHeaderKey, accessToken)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    public void getAllDepartmentAPI() throws Exception
+    public void getAllEmployeesAPI() throws Exception
     {
 
     }
@@ -121,8 +71,7 @@ public class DeptJPAControllerTest {
     //GetByID with Token
     @Test
     @Order(6)
-    public void getDepartmentById() throws Exception {
-
+    public void getEmployessById() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.get(uri + id)
                         .header(accessTokenHeaderKey, accessToken)
@@ -134,7 +83,7 @@ public class DeptJPAControllerTest {
     //Put ID with Token
     @Test
     @Order(7)
-    public void putDepartmentById() throws Exception {
+    public void putEmployessById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
 
@@ -142,7 +91,7 @@ public class DeptJPAControllerTest {
                         .header(accessTokenHeaderKey, accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(department)))
+                        .content(JsonUtils.asJsonString(Employess)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -150,7 +99,7 @@ public class DeptJPAControllerTest {
     //Delete by ID with Token
     @Test
     @Order(8)
-    public void deleteDepartmentById() throws Exception {
+    public void deleteEmployessById() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.delete(uri + id)
                         .header(accessTokenHeaderKey, accessToken)
@@ -158,7 +107,5 @@ public class DeptJPAControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-
-
 
 }
