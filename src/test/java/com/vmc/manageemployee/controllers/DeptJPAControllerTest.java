@@ -70,7 +70,7 @@ public class DeptJPAControllerTest {
 
     //Get All with Token
     @Test
-    @Order(5)
+    @Order(2)
     public void givenToken_whenGetSecureRequest_thenOk() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.get(uri + "/departments")
@@ -94,7 +94,7 @@ public class DeptJPAControllerTest {
 
     // GetByID with Token
     @Test
-    @Order(6)
+    @Order(3)
     public void getDepartmentById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
@@ -105,9 +105,22 @@ public class DeptJPAControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    // Post with Token
+    @Test
+    @Order(4)
+    public void postDepartmentById() throws Exception {
+
+        String accessToken = obtainAccessToken(username, password);
+        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations/" + department1.getLocation_id()  +"/departments")
+                        .header(accessTokenHeaderKey, accessToken)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
     //Put ID with Token
     @Test
-    @Order(7)
+    @Order(5)
     public void putDepartmentById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
@@ -123,7 +136,7 @@ public class DeptJPAControllerTest {
 
     //Delete by ID with Token
     @Test
-    @Order(8)
+    @Order(6)
     public void deleteDepartmentById() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.delete(uri + "/departmentlocations/" + 1 + "/departments/" + id)

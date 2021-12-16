@@ -111,7 +111,7 @@ public class DeptlocJPAControllerTest {
 
     //Get All with Token
     @Test
-    @Order(5)
+    @Order(2)
     public void givenToken_whenGetSecureRequest_thenOk() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.get(uri + "/departmentlocations")
@@ -122,6 +122,7 @@ public class DeptlocJPAControllerTest {
     }
 
     @Test
+    @Order(3)
     public void getAllDepartmentLocationAPI() throws Exception
     {
         String accessToken = obtainAccessToken(username, password);
@@ -132,10 +133,21 @@ public class DeptlocJPAControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+    @Test
+    @Order(4)
+    public void postDepartmentLocationById() throws Exception {
+
+        String accessToken = obtainAccessToken(username, password);
+        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations")
+                        .header(accessTokenHeaderKey, accessToken)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
     //GetByID with Token
     @Test
-    @Order(6)
+    @Order(5)
     public void getDepartmentLocationById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
@@ -148,7 +160,7 @@ public class DeptlocJPAControllerTest {
 
     //Put ID with Token
     @Test
-    @Order(7)
+    @Order(6)
     public void putDepartmentLocationById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
@@ -164,7 +176,7 @@ public class DeptlocJPAControllerTest {
 
     //Delete by ID with Token
     @Test
-    @Order(8)
+    @Order(7)
     public void deleteDepartmentLocationById() throws Exception {
         String accessToken = obtainAccessToken(username, password);
         mockMvc.perform(MockMvcRequestBuilders.delete(uri + "/departmentlocations/" + 10)
