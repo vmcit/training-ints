@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,11 +20,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DeptlocJPAControllerTest {
@@ -36,15 +34,18 @@ public class DeptlocJPAControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    public String uri = "/api/app/jpa";
-    public String id = "20";
-    public String signinURI = "/api/auth/signin";
-    public String accessTokenHeaderKey = "Authorization";
-    public String username = "admin";
-    public String password = "Abc12345";
+    private String uri = "/api/app/jpa";
+    private String id = "1";
+    private String signinURI = "/api/auth/signin";
+    private String accessTokenHeaderKey = "Authorization";
+
+    /* user name and pasword admin */
+    private String username = "admin";
+    private String password = "Abc12345";
+
 
     /* test create, delete */
-    DepartmentLocationDTO DepartmentLocationLocation1 = new DepartmentLocationDTO(20,
+    DepartmentLocationDTO  departmentLocationLocation1 = new DepartmentLocationDTO(20,
             "Ha Noi", "Ha Noi","Viet Nam"
     );
     /* test update */
@@ -64,42 +65,41 @@ public class DeptlocJPAControllerTest {
         return resultActions.andReturn().getResponse().getHeader(accessTokenHeaderKey);
     }
 
-    // Load Context
-//    @Test
-//    @Order(1)
-//    public void contextLoads() throws Exception {
-//         assertThat(deptlocJPAController).isNotNull();
-//    }
+    @Test
+    @Order(1)
+    public void contextLoads() throws Exception {
+         assertThat(deptlocJPAController).isNotNull();
+    }
 
 
-//    // PostID without Token
+    // PostID without Token
 //    @Test
 //    @Order(2)
 //    public void givenNoToken_whenPostSecureRequest_thenUnauthorized() throws Exception {
 //
-//        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations" )
+//        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations/" )
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .accept(MediaType.APPLICATION_JSON)
-//                        .content(JsonUtils.asJsonString(DepartmentLocationLocation1)))
+//                        .content(JsonUtils.asJsonString(departmentLocationLocation1)))
 //                .andDo(MockMvcResultHandlers.print())
 //                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
 //    }
-//
-//    //Post ID with Token
+
+    //Post ID with Token
 //    @Test
 //    @Order(3)
 //    public void givenToken_whenPostSecureRequest_thenOk() throws Exception {
 //
 //        String accessToken = obtainAccessToken(username, password);
-//        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations")
+//        mockMvc.perform(MockMvcRequestBuilders.post(uri + "/departmentlocations/")
 //                        .header(accessTokenHeaderKey, accessToken)
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .accept(MediaType.APPLICATION_JSON)
-//                        .content(JsonUtils.asJsonString(DepartmentLocationLocation1)))
+//                        .content(JsonUtils.asJsonString(departmentLocationLocation1)))
 //                .andExpect(MockMvcResultMatchers.status().isOk());
 //    }
-//
-//    // Get All without Token
+
+    // Get All without Token
 //    @Test
 //    @Order(4)
 //    public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
@@ -130,10 +130,7 @@ public class DeptlocJPAControllerTest {
                         .header(accessTokenHeaderKey, accessToken)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.departmentlocations").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.departmentlocations[*].locationid").isNotEmpty());
-
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     //GetByID with Token
@@ -142,7 +139,7 @@ public class DeptlocJPAControllerTest {
     public void getDepartmentLocationById() throws Exception {
 
         String accessToken = obtainAccessToken(username, password);
-        mockMvc.perform(MockMvcRequestBuilders.get(uri + "/departmentlocations" + id)
+        mockMvc.perform(MockMvcRequestBuilders.get(uri + "/departmentlocations/" + id)
                         .header(accessTokenHeaderKey, accessToken)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
@@ -156,7 +153,7 @@ public class DeptlocJPAControllerTest {
 
         String accessToken = obtainAccessToken(username, password);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(uri + "/departmentlocations" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put(uri + "/departmentlocations/" + 20)
                         .header(accessTokenHeaderKey, accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -170,10 +167,11 @@ public class DeptlocJPAControllerTest {
     @Order(8)
     public void deleteDepartmentLocationById() throws Exception {
         String accessToken = obtainAccessToken(username, password);
-        mockMvc.perform(MockMvcRequestBuilders.delete(uri + "/departmentlocations" + id)
+        mockMvc.perform(MockMvcRequestBuilders.delete(uri + "/departmentlocations/" + 10)
                         .header(accessTokenHeaderKey, accessToken)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
 }
