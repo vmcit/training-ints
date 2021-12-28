@@ -2,6 +2,7 @@ package com.vmc.manageemployee.controllers.jpa;
 
 
 import com.vmc.manageemployee.dto.EmployeeDTO;
+import com.vmc.manageemployee.entities.Department;
 import com.vmc.manageemployee.entities.Employees;
 import com.vmc.manageemployee.exception.ResourceNotFoundException;
 import com.vmc.manageemployee.repositories.jpa.DepartmentRepository;
@@ -19,7 +20,7 @@ import java.util.Optional;
 /**
  * Controller use JPA
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/api/app/jpa")
 public class EmployeeJPAController {
@@ -65,18 +66,31 @@ public class EmployeeJPAController {
     @PostMapping("/departments/{department_id}/employees")
     public ResponseEntity<String> createEmployee(@PathVariable(value = "department_id") long id, @Validated @RequestBody EmployeeDTO employeeDTO) {
         try {
-            departmentRepository.findById((int) id).map(department -> {
-                Employees employees1 = new Employees();
-                employees1.setDepartment(department);
-                employees1.setId(employeeDTO.getId());
-                employees1.setFullName(employeeDTO.getFull_name());
-                employees1.setGender(employeeDTO.getGender());
-                employees1.setBirthDate(employeeDTO.getBirth_date());
-                employeeRepository.save(employees1);
-                return ResponseEntity.ok().build();
-            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + id + " not found"));
+//            departmentRepository.findById((int) id).map(department -> {
+//                Employees employees1 = new Employees();
+//                employees1.setDepartment(department.get());
+//                employees1.setId(employeeDTO.getId());
+//                employees1.setFullName(employeeDTO.getFull_name());
+//                employees1.setGender(employeeDTO.getGender());
+//                employees1.setBirthDate(employeeDTO.getBirth_date());
+//                employeeRepository.save(employees1);
+//                return ResponseEntity.ok().build();
+//            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + id + " not found"));
+            Optional<Department> optionalDepartment = departmentRepository.findById((int) id);
+            if (!optionalDepartment.isPresent()) {
+                return ResponseEntity.unprocessableEntity().build();
+            }
+            Employees employees1 = new Employees();
+            employees1.setDepartment(optionalDepartment.get());
+            employees1.setId(employeeDTO.getId());
+            employees1.setFullName(employeeDTO.getFull_name());
+            employees1.setGender(employeeDTO.getGender());
+            employees1.setBirthDate(employeeDTO.getBirth_date());
+            employeeRepository.save(employees1);
+            return ResponseEntity.ok().build();
 
-            return new ResponseEntity<>("Employee was created successfully.", HttpStatus.CREATED);
+
+            // return new ResponseEntity<>("Employee was created successfully.", HttpStatus.CREATED);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,21 +103,38 @@ public class EmployeeJPAController {
                                                  @PathVariable("id") long employeeid,
                                                  @RequestBody EmployeeDTO employeeDTO) {
         try {
-            departmentRepository.findById((int) departmentid).map(department -> {
-                Employees employees1 = new Employees();
-                employees1.setDepartment(department);
-                employeeRepository.findById((int) employeeid).map(employees2 -> {
-                    employees1.setId(employees2.getId());
-                    employees1.setFullName(employeeDTO.getFull_name());
-                    employees1.setGender(employeeDTO.getGender());
-                    employees1.setBirthDate(employeeDTO.getBirth_date());
-                    employeeRepository.save(employees1);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("employee_id " + employeeid + "not found"));
-                return ResponseEntity.ok().build();
-            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + departmentid + " not found"));
+//            departmentRepository.findById((int) departmentid).map(department -> {
+//                Employees employees1 = new Employees();
+//                employees1.setDepartment(department);
+//                employeeRepository.findById((int) employeeid).map(employees2 -> {
+//                    employees1.setId(employees2.getId());
+//                    employees1.setFullName(employeeDTO.getFull_name());
+//                    employees1.setGender(employeeDTO.getGender());
+//                    employees1.setBirthDate(employeeDTO.getBirth_date());
+//                    employeeRepository.save(employees1);
+//                    return ResponseEntity.ok().build();
+//                }).orElseThrow(() -> new ResourceNotFoundException("employee_id " + employeeid + "not found"));
+//                return ResponseEntity.ok().build();
+//            }).orElseThrow(() -> new ResourceNotFoundException("department_id " + departmentid + " not found"));
+            Optional<Department> optionalDepartment = departmentRepository.findById((int) departmentid);
+            if (!optionalDepartment.isPresent()) {
+                return ResponseEntity.unprocessableEntity().build();
+            }
+            Employees employees1 = new Employees();
+            employees1.setDepartment(optionalDepartment.get());
+            Optional<Employees> optionalEmployees = employeeRepository.findById((int) employeeid);
+            if (!optionalEmployees.isPresent()) {
+                return ResponseEntity.unprocessableEntity().build();
+            }
+            employees1.setId(optionalEmployees.get().getId());
+            employees1.setFullName(employeeDTO.getFull_name());
+            employees1.setGender(employeeDTO.getGender());
+            employees1.setBirthDate(employeeDTO.getBirth_date());
+            employeeRepository.save(employees1);
+            return ResponseEntity.ok().build();
 
-            return new ResponseEntity<>("Employee was updated successfully.", HttpStatus.OK);
+
+            // return new ResponseEntity<>("Employee was updated successfully.", HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

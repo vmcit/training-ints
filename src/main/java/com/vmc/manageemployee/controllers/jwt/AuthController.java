@@ -3,6 +3,7 @@ package com.vmc.manageemployee.controllers.jwt;
 import com.vmc.manageemployee.common.jwt.ERole;
 import com.vmc.manageemployee.common.jwt.JwtTokenUtil;
 import com.vmc.manageemployee.common.jwt.JwtUtils;
+import com.vmc.manageemployee.dto.jwt.JwtResponse;
 import com.vmc.manageemployee.dto.jwt.LoginRequest;
 import com.vmc.manageemployee.dto.jwt.MessageResponse;
 import com.vmc.manageemployee.dto.jwt.SignupRequest;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * Dang ky dang nhap get token.
  */
-@CrossOrigin (origins = "*", maxAge = 3600)
+@CrossOrigin (origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -71,12 +72,12 @@ public class AuthController {
         Header.add("Authorization","Bearer "+ jwt);
         // Header.add("X-Refresh-Token",refreshToken.getToken());
 
-//        return ResponseEntity.ok(new JwtResponse(jwt,
-//                userDetails.getId(),
-//                userDetails.getUsername(),
-//                userDetails.getEmail(),
-//                roles));
-        return new ResponseEntity<>(Header, HttpStatus.OK);
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
+       // return new ResponseEntity<>(Header, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
